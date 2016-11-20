@@ -1,5 +1,6 @@
 
-var command = require('../model/command.js')
+var command = require('../model/command.js');
+var qiniu = require('../model/qiniu.js');
 
 module.exports = function(app) {
 
@@ -13,11 +14,27 @@ module.exports = function(app) {
 		console.log(title , url);
 
 		var commandToExec = 'youtube-dl -o ' + title + ' ' + url;
+		// var commandToExec = 'ls -a';
 		command(commandToExec ,function(error){
 			console.log('exec command error ' , error);
+
+			if (error) {
+				res.send(error);
+			} 
+
+			qiniu('./package.json' , title , function(error){
+				if (error) {
+					res.send('upload qiqniu fail' + err);
+				};
+
+				res.send('upload qiqniu success');
+			});
+
+
+
+
 		})
 
-		return res.redirct("/download");
 	});
 
 }
