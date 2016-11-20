@@ -5,7 +5,11 @@ var qiniu = require('../model/qiniu.js');
 module.exports = function(app) {
 
 	app.get('/download' , function(req , res){
-		  res.render('download');
+		var user =  req.session.user ;
+		if (!user) {
+			res.redirect('/');
+		};
+		res.render('download');
 	});
 
 	app.post('/download' , function(req , res){
@@ -29,9 +33,6 @@ module.exports = function(app) {
 
 				res.send('upload qiqniu success');
 			});
-
-
-
 
 		})
 
