@@ -26,7 +26,8 @@ module.exports = function(app) {
 				res.send(error);
 			} 
 
-			qiniu('./package.json' , title , function(error){
+			var file = './' + title
+			qiniu(file , title , function(error){
 				if (error) {
 					res.send('upload qiqniu fail' + error);
 				};
